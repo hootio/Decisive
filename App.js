@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, View, TextInput} from 'react-native';
-import Swipeout from react-native-swipeout;
+import Swipeout from 'react-native-swipeout';
 
 
 export default class Decisive extends React.Component {
