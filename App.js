@@ -4,26 +4,18 @@ import SwipeOut from 'react-native-swipeout';
 
 
 export default class Decisive extends React.Component {
-
-	constructor(props) {
-		super(props);
-		this.state = {
-			options : [{name: 'hootan'}, {name: 'dorsa'}, {name: 'maryam'}, {name: 'reza'}]
-		};
-	}
-
 	render() {
 		return (
 			<View style={{flex: 1, marginTop: 32}}>
 				<Text style={{fontSize: 27}}>{'Hello there!\t\t\t\t\t\t\u{1F604}\u{2764}\u{1F596}\nCreate some decision options...'}</Text>
-				<OptionsList options={this.state.options}/>
+				<OptionsList/>
 			</View>
 		);
 	}
 }
 
 
-class Option extends React.Component {
+class OptionRow extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -53,14 +45,12 @@ class Option extends React.Component {
 							[
 								{text : 'No', onPress : () => {}, style: 'cancel'},
 								{text : 'Yes', onPress : () => {
-									this.props.parentOptionsList.props.options.splice(this.props.index, 1);
-									// refresh list
-									this.props.parentOptionsList.refreshOptionsList(deletingIndex);
+									// update and refresh list
+									this.props.parentOptionsList.deleteOption(deletingIndex);
+									this.props.parentOptionsList.refresh();
 								}}
 							],
-							{
-								cancelable : true
-							}
+							{ cancelable : true }
 						);
 					},
 					text : 'Delete',
@@ -87,25 +77,45 @@ class OptionsList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			deletedOptionIndex : null
+			refreshBool	: true,
+			options		: [{name: 'hootan'}, {name: 'dorsa'}, {name: 'maryam'}, {name: 'reza'}],
 		};
 	}
 
-	refreshOptionsList = (deletedIndex) => {
-		this.setState( {
-			deletedOptionIndex : deletedIndex
-		});
-	};
+	addOption = (name) => {
+		const newState = this.state;
+		newState.options.push({name: name});
+		this.setState(newState);
+	}
+
+	deleteOption = (deletingIndex) => {
+		let options = this.state.options;
+		options.splice(deletingIndex, 1);
+		let newState = this.state;
+		if (options.length < 1) {
+			newState.options = [];
+		} else {
+			newState.options = options;
+		}
+		this.setState(newState);
+		// this.setState(this.state.options.splice(deletingIndex, 1));
+	}
+
+	refresh = () => {
+		const newState = this.state;
+		newState.refreshBool = !newState.refreshBool;
+		this.setState(newState);
+	}
 
 	render() {
 		return (
 			<View style={{flex: 1, marginTop: 16}}>
 				<FlatList
-					data={this.props.options}
+					data={this.state.options}
 					renderItem={
 						({item, index}) => {
 							return (
-								<Option item={item} index={index} parentOptionsList={this}></Option>
+								<OptionRow item={item} index={index} parentOptionsList={this}></OptionRow>
 							);
 						}
 					}
@@ -114,6 +124,8 @@ class OptionsList extends React.Component {
 					}
 					// onPressItem={({item}) => {item.name[0]}}
 				/>
+				<Text>{'_DEBUG_ ' + this.state.refreshBool.toString()}</Text>
+				<Text>{'_DEBUG_ ' + this.state.options.toString()}</Text>
 			</View>
 		);
 	}
