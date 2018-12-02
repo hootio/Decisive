@@ -47,7 +47,7 @@ class OptionRow extends React.Component {
 								{text : 'Yes', onPress : () => {
 									// update and refresh list
 									this.props.parentOptionsList.deleteOption(deletingIndex);
-									this.props.parentOptionsList.refresh();
+									// this.props.parentOptionsList.refresh();
 								}}
 							],
 							{ cancelable : true }
@@ -77,35 +77,34 @@ class OptionsList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			refreshBool	: true,
+			// refreshBool	: true,
 			options		: [{name: 'hootan'}, {name: 'dorsa'}, {name: 'maryam'}, {name: 'reza'}],
 		};
 	}
 
 	addOption = (name) => {
-		const newState = this.state;
-		newState.options.push({name: name});
+		const options = this.state.options;
+		options.push({name: name});
+		const newState = {options : options};
 		this.setState(newState);
 	}
 
 	deleteOption = (deletingIndex) => {
 		let options = this.state.options;
-		options.splice(deletingIndex, 1);
-		let newState = this.state;
-		if (options.length < 1) {
-			newState.options = [];
+		if (options.length <= 1) {
+			options = [];
 		} else {
-			newState.options = options;
+			options.splice(deletingIndex, 1);
 		}
+		const newState = {options : options};
 		this.setState(newState);
-		// this.setState(this.state.options.splice(deletingIndex, 1));
 	}
 
-	refresh = () => {
-		const newState = this.state;
-		newState.refreshBool = !newState.refreshBool;
-		this.setState(newState);
-	}
+	// refresh = () => {
+	// 	const newState = this.state;
+	// 	newState.refreshBool = !newState.refreshBool;
+	// 	this.setState(newState);
+	// }
 
 	render() {
 		return (
@@ -124,7 +123,7 @@ class OptionsList extends React.Component {
 					}
 					// onPressItem={({item}) => {item.name[0]}}
 				/>
-				<Text>{'_DEBUG_ ' + this.state.refreshBool.toString()}</Text>
+				{/* <Text>{'_DEBUG_ ' + this.state.refreshBool.toString()}</Text> */}
 				<Text>{'_DEBUG_ ' + this.state.options.toString()}</Text>
 			</View>
 		);
