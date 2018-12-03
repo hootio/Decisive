@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View, Alert} from 'react-native';
+import {Alert, Button, FlatList, StyleSheet, Text, View} from 'react-native';
 import SwipeOut from 'react-native-swipeout';
 
 
@@ -45,9 +45,7 @@ class OptionRow extends React.Component {
 							[
 								{text : 'No', onPress : () => {}, style: 'cancel'},
 								{text : 'Yes', onPress : () => {
-									// update and refresh list
 									this.props.parentOptionsList.deleteOption(deletingIndex);
-									// this.props.parentOptionsList.refresh();
 								}}
 							],
 							{ cancelable : true }
@@ -77,34 +75,21 @@ class OptionsList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// refreshBool	: true,
-			options		: [{name: 'hootan'}, {name: 'dorsa'}, {name: 'maryam'}, {name: 'reza'}],
+			options : [],
 		};
 	}
 
-	addOption = (name) => {
-		const options = this.state.options;
-		options.push({name: name});
-		const newState = {options : options};
-		this.setState(newState);
+	addOption = (newName) => {
+		const options = this.state.options.concat({name: newName});
+		this.setState({options : options});
 	}
 
 	deleteOption = (deletingIndex) => {
-		let options = this.state.options;
-		if (options.length <= 1) {
-			options = [];
-		} else {
-			options.splice(deletingIndex, 1);
-		}
-		const newState = {options : options};
-		this.setState(newState);
+		const optionsA = this.state.options.slice(0, deletingIndex);
+		const optionsB = this.state.options.slice(deletingIndex + 1, this.state.options.length);
+		const options = optionsA.concat(optionsB);
+		this.setState({options : options});
 	}
-
-	// refresh = () => {
-	// 	const newState = this.state;
-	// 	newState.refreshBool = !newState.refreshBool;
-	// 	this.setState(newState);
-	// }
 
 	render() {
 		return (
@@ -123,8 +108,30 @@ class OptionsList extends React.Component {
 					}
 					// onPressItem={({item}) => {item.name[0]}}
 				/>
-				{/* <Text>{'_DEBUG_ ' + this.state.refreshBool.toString()}</Text> */}
-				<Text>{'_DEBUG_ ' + this.state.options.toString()}</Text>
+				{this.state.options.map( (option) => {
+					<Text>{'_DEBUG_ ' + option.name}</Text>
+				})}
+				<Text>{this.state.options && '_DEBUG_ ' + this.state.options.toString()}</Text>
+				<Text>{'_DEBUG_ ' + this.state.version}</Text>
+				<Button
+					onPress={ () => {
+						Alert.alert(
+							'Add Option',
+							'Are you sure you want to add this option?',
+							[
+								{text : 'Cancel', onPress : () => {}, style: 'cancel'},
+								{text : 'Add', onPress : () => {
+									// update and refresh list
+									this.addOption('new option');
+								}}
+							],
+							{ cancelable : true }
+						);
+					}}
+					title="Add Option"
+					color="#3fae49"
+					accessibilityLabel="Add a new option to the list"
+				/>
 			</View>
 		);
 	}
