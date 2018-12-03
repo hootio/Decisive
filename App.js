@@ -3,6 +3,13 @@ import {Alert, Button, FlatList, StyleSheet, Text, View} from 'react-native';
 import SwipeOut from 'react-native-swipeout';
 
 
+let maxId = 0;
+const genId = () => {
+	++maxId;
+	return maxId;
+}
+
+
 export default class Decisive extends React.Component {
 	render() {
 		return (
@@ -62,7 +69,7 @@ class OptionRow extends React.Component {
 		return (
 			<SwipeOut {...swipeSettings}>
 				<View style={{flex: 1, backgroundColor: this.props.index % 2 === 0 ? '#00bfd6' : '#e63e2f'}}>
-					<Text style={styles.option}>{this.props.item.name}</Text>
+					<Text key={this.props.item.id} style={styles.option}>{this.props.item.name}</Text>
 				</View>
 			</SwipeOut>
 		);
@@ -76,11 +83,12 @@ class OptionsList extends React.Component {
 		super(props);
 		this.state = {
 			options : [],
+			// options : [{name: 'hootan', id : 1}],
 		};
 	}
 
 	addOption = (newName) => {
-		const options = this.state.options.concat({name: newName});
+		const options = this.state.options.concat({name: newName, id : genId()});
 		this.setState({options : options});
 	}
 
@@ -109,10 +117,8 @@ class OptionsList extends React.Component {
 					// onPressItem={({item}) => {item.name[0]}}
 				/>
 				{this.state.options.map( (option) => {
-					<Text>{'_DEBUG_ ' + option.name}</Text>
+					return <Text key={option.id}> {'_DEBUG_ ' + option.name + ' ' + option.id}</Text>
 				})}
-				<Text>{this.state.options && '_DEBUG_ ' + this.state.options.toString()}</Text>
-				<Text>{'_DEBUG_ ' + this.state.version}</Text>
 				<Button
 					onPress={ () => {
 						Alert.alert(
