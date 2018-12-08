@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, Button, FlatList, Text, TextInput, View} from 'react-native';
+import {Button, FlatList, Text, TextInput, View} from 'react-native';
 
 import OptionRow from './OptionRow';
 
@@ -8,9 +8,9 @@ class OptionsList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			prints		: [],
+			// prints		: [],
 			options		: [],
-			emojis		: ['🤩', '😍', '😋', '🤤', '😎', '😏', '🙃', '👌🏼', '🙈', '🙉', '🙊'],
+			emojis		: ['🤩', '😍', '😋', '🤤', '😎', '😏', '🙃', '👌🏼', '👍🏼', '🙈', '🙉', '🙊'],
 			winnerText	: '',
 			maxId		: 0,
 		};
@@ -27,10 +27,10 @@ class OptionsList extends React.Component {
 		this.setState({options : options});
 	}
 
-	addPrint = (newPrint) => {
-		const prints = this.state.prints.concat(newPrint);
-		this.setState({prints : prints});
-	}
+	// addPrint = (newPrint) => {
+	// 	const prints = this.state.prints.concat(newPrint);
+	// 	this.setState({prints : prints});
+	// }
 
 	deleteOption = (deletingIndex) => {
 		const optionsA = this.state.options.slice(0, deletingIndex);
@@ -87,9 +87,9 @@ class OptionsList extends React.Component {
 				{/* {this.state.options.map( (option) => {
 					return <Text key={option.id}> {'_DEBUG_ ' + JSON.stringify(option, null, 4)}</Text>
 				})} */}
-				{this.state.prints.map( (print) => {
+				{/* {this.state.prints.map( (print) => {
 					return <Text> {'_DEBUG_ ' + JSON.stringify(print, null, 4)}</Text>
-				})}
+				})} */}
 				<Button
 					title='Be Decisive!'
 					color='#3fae49'
@@ -97,18 +97,6 @@ class OptionsList extends React.Component {
 					disabled={this.state.options.length <= 0}
 					onPress={ () => {
 						this.pickWinner();
-						// Alert.alert(
-						// 	'Add Option',
-						// 	'Are you sure you want to add this option?',
-						// 	[
-						// 		{text : 'Cancel', onPress : () => {}, style: 'cancel'},
-						// 		{text : 'Add', onPress : () => {
-						// 			// update and refresh list
-						// 			this.addOption('new option');
-						// 		}}
-						// 	],
-						// 	{ cancelable : true }
-						// );
 					}}
 				/>
 				<Text style={{textAlign: 'center', padding: 32, color: '#3fae49', fontSize: 32,}}>{this.state.winnerText}</Text>
