@@ -65,9 +65,7 @@ class OptionsList extends React.Component {
 					onSubmitEditing={ (event) => {
 						if (!event.nativeEvent.text) return;
 						this.addOption(event.nativeEvent.text);
-						// this.addPrint(this.optionInput);
-						// this.optionInput.clear();
-						// this.addPrint(this.optionInput.value)
+						this.optionInput.clear();
 					}}
 				/>
 				<FlatList
@@ -99,7 +97,7 @@ class OptionsList extends React.Component {
 						this.pickWinner();
 					}}
 				/>
-				<Text style={{textAlign: 'center', padding: 32, color: '#3fae49', fontSize: 32,}}>{this.state.winnerText}</Text>
+				<Text style={{textAlign: 'center', padding: 32, color: '#3fae49', fontSize: 32,}}>{this.state.options.length <= 0 ? '' : this.state.winnerText}</Text>
 			</View>
 		);
 	}
