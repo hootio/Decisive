@@ -19,7 +19,7 @@ class OptionRow extends React.Component {
 					onPress : () => {
 						Alert.alert(
 							'Alert!',
-							'Are you sure you want to delete this option?',
+							'Are you sure you want to delete ' + this.props.item.name + '?',
 							[
 								{text : 'No', onPress : () => {}, style: 'cancel'},
 								{text : 'Yes', onPress : () => {
