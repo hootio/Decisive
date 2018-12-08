@@ -14,25 +14,16 @@ class OptionRow extends React.Component {
 	render() {
 		const swipeSettings = {
 			autoClose : true,
-			onClose : (secId, rowId, direction) => {
-				if (this.state.activeOptionIndex != null) {
-					this.setState({activeOptionIndex : null});
-				}
-			},
-			onOpen : (secId, rowId, direction) => {
-				this.setState({activeOptionIndex : this.props.index});
-			},
 			right : [
 				{
 					onPress : () => {
-						const deletingIndex = this.state.activeOptionIndex;
 						Alert.alert(
 							'Alert!',
 							'Are you sure you want to delete this option?',
 							[
 								{text : 'No', onPress : () => {}, style: 'cancel'},
 								{text : 'Yes', onPress : () => {
-									this.props.parentOptionsList.deleteOption(deletingIndex);
+									this.props.parentOptionsList.deleteOption(this.props.index);
 								}}
 							],
 							{ cancelable : true }
@@ -43,7 +34,6 @@ class OptionRow extends React.Component {
 				}
 			],
 			rowId : this.props.index,
-			sectionId : 1
 		};
 
 		return (
