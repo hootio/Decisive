@@ -49,7 +49,7 @@ class OptionRow extends React.Component {
 		return (
 			<SwipeOut {...swipeSettings}>
 				<View style={{flex: 1, backgroundColor: this.props.index % 2 === 0 ? '#00bfd6' : '#e63e2f'}}>
-					<Text key={this.props.item.id} style={{color: 'white', padding: 10, fontSize: 20}}>
+					<Text key={this.props.item.id} style={{textAlign: 'center', color: 'white', padding: 12, fontSize: 24}}>
 						{this.props.item.name}
 					</Text>
 				</View>

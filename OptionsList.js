@@ -8,7 +8,9 @@ class OptionsList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			prints : [],
 			options : [],
+			// options : [{name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0},{name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0},{name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0},{name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0},{name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0},{name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0},{name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0},{name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0}, {name: 'h', id : 0},],
 			maxId : 0,
 		};
 	}
@@ -20,8 +22,13 @@ class OptionsList extends React.Component {
 	}
 
 	addOption = (newName) => {
-		const options = this.state.options.concat({name: newName, id : this.genId()});
+		const options = this.state.options.concat({name : newName, id : this.genId()});
 		this.setState({options : options});
+	}
+
+	addPrint = (newPrint) => {
+		const prints = this.state.prints.concat(newPrint);
+		this.setState({prints : prints});
 	}
 
 	deleteOption = (deletingIndex) => {
@@ -33,16 +40,24 @@ class OptionsList extends React.Component {
 
 	render() {
 		return (
-			<View style={{flex: 1, marginTop: 16}}>
+			<View style={{flex: 1}}>
 				<TextInput
+					ref={ (input) => { this.optionInput = input }}
 					style={{
-						color: 'black',
-						padding: 10,
+						textAlign: 'center',
+						borderColor: '#3fae49',
+						padding: 16,
 						fontSize: 20,
 					}}
-					placeholder="Add a new option!"
-					onSubmitEditing={ (text) => {
-						this.addOption(text);
+					placeholder='Add options!'
+					returnKeyType='done'
+					// clearButtonMode='always'
+					onSubmitEditing={ (event) => {
+						if (!event.nativeEvent.text) return;
+						this.addOption(event.nativeEvent.text);
+						// this.addPrint(this.optionInput);
+						// this.optionInput.clear();
+						// this.addPrint(this.optionInput.value)
 					}}
 				/>
 				<FlatList
@@ -60,31 +75,30 @@ class OptionsList extends React.Component {
 					// onPressItem={({item}) => {item.name[0]}}
 				/>
 				{this.state.options.map( (option) => {
-					return <Text key={option.id}> {'_DEBUG_ ' + option.name + ' ' + option.id}</Text>
+					return <Text key={option.id}> {'_DEBUG_ ' + JSON.stringify(option, null, 4)}</Text>
+				})}
+				{this.state.prints.map( (print) => {
+					return <Text> {'_DEBUG_ ' + JSON.stringify(print, null, 4)}</Text>
 				})}
 				<Button
+					title='Be Decisive!'
+					color='#3fae49'
+					accessibilityLabel='Add a new option to the list'
+					disabled={this.state.options.length <= 0}
 					onPress={ () => {
-						Alert.alert(
-							'Add Option',
-							'Are you sure you want to add this option?',
-							[
-								{text : 'Cancel', onPress : () => {}, style: 'cancel'},
-								{text : 'Add', onPress : () => {
-									// update and refresh list
-									this.addOption('new option');
-								}}
-							],
-							{ cancelable : true }
-						);
+						// Alert.alert(
+						// 	'Add Option',
+						// 	'Are you sure you want to add this option?',
+						// 	[
+						// 		{text : 'Cancel', onPress : () => {}, style: 'cancel'},
+						// 		{text : 'Add', onPress : () => {
+						// 			// update and refresh list
+						// 			this.addOption('new option');
+						// 		}}
+						// 	],
+						// 	{ cancelable : true }
+						// );
 					}}
-					style={{
-						color: 'white',
-						padding: 10,
-						fontSize: 20,
-					}}
-					title="Add Option"
-					color="#3fae49"
-					accessibilityLabel="Add a new option to the list"
 				/>
 			</View>
 		);

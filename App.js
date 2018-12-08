@@ -7,11 +7,17 @@ export default class Decisive extends React.Component {
 	render() {
 		return (
 			<View style={{flex: 1, marginTop: 32}}>
-				<Text style={{fontSize: 27}}>
-					{'Hello there!\t\t\t\t\t\t\t😄❤️🖖🏼\nCreate some decision options...'}
-				</Text>
+				<Text style={appStyle}>{'Hello there!'}</Text>
+				<Text style={appStyle}>{'🖖🏼'}</Text>
+				{/* <Text style={appStyle}>{'Create some decision options...'}</Text> */}
 				<OptionsList/>
 			</View>
 		);
 	}
+}
+
+const appStyle = {
+	textAlign: 'center',
+	padding: 4,
+	fontSize: 32,
 }
