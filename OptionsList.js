@@ -59,7 +59,7 @@ class OptionsList extends React.Component {
 						padding: 16,
 						fontSize: 20,
 					}}
-					placeholder='Add options!'
+					placeholder='Add options...'
 					returnKeyType='done'
 					// clearButtonMode='always'
 					onSubmitEditing={ (event) => {
