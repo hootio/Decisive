@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Decisive",
-    "description": "This app helps you be more DECISIVE in life! :)",
+    "description": "Decisive helps you make decisions more confidently in your life! :)",
     "slug": "decisive",
     "privacy": "public",
     "sdkVersion": "30.0.0",
