@@ -91,6 +91,11 @@ class OptionsList extends React.Component {
 				<Button
 					title='Be Decisive!'
 					color='#3fae49'
+					buttonStyle={{
+						backgroundColor: 'gray',
+						borderWidth: 5,
+						borderRadius: 15
+					}}
 					accessibilityLabel='Add a new option to the list'
 					disabled={this.state.options.length <= 0}
 					onPress={ () => {
