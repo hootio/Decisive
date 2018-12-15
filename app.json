@@ -1,11 +1,14 @@
 {
   "expo": {
     "name": "Decisive",
-    "description": "This project is really great.",
-    "slug": "Decisive",
+    "description": "Decisive helps you make decisions more confidently in your life! :)\n\nWith love,\ndoragon & h00tman",
+    "slug": "decisive",
     "privacy": "public",
     "sdkVersion": "30.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,7 +24,11 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.yourcompany.yourappname",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.yourcompany.yourappname"
     }
   }
 }
